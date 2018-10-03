@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>study_table</title>
+    <link rel="stylesheet" href="../css/reset.css" type="text/css">
+    <style type="text/css">
+        /* common */
+        h1 {font-size:16px; margin-top:20px;}
+        .wrap {width:900px; margin:0 auto}
+        .article {margin-top:20px;}
+        /* custom */
+        table {margin:10px; border-collapse:collapse}
+        td {padding:5px; border:1px solid #222}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>테이블이 여러개일 때 각각의 테이블에 1~25까지 숫자 입력</h1>
+        <div class="article">
+            <table class="test01_table" data-role="setTable">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="test01_table" data-role="setTable">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+        //테이블이 여러개일 때 각각의 테이블에 1~25까지 숫자 입력
+        function setTable01(selector){
+            var table = document.querySelectorAll(selector);//매개변수로 테이블 선언
+            table.forEach(function(v, i){//forEach문으로 테이블 각각 함수 실행
+                var td = table[i].getElementsByTagName('td');
+                for(i=0; i<td.length; i++){
+                    td[i].innerHTML = i+1;
+                };
+            });
+        };
+        setTable01('.test01_table');
+    </script>
+</body>

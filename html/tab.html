@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>study_tab</title>
+    <link rel="stylesheet" href="../css/reset.css" type="text/css">
+    <style type="text/css">
+        /* common */
+        h1 {font-size:16px; margin-top:20px;}
+        .wrap {width:900px; margin:0 auto}
+        .article {margin-top:20px;}
+        /* custom */
+        .tab_list:after {content:''; clear:both; display:block}
+        .tab_list li {float:left; width:100px; height:50px; line-height:50px; text-align:center; border:1px solid red}
+        .tab_list li.active {color:#fff; background-color:red}
+        .tab_content {display:none; width:300px; height:200px; border:1px solid red}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>Tab</h1>
+        <div class="article">
+            <ul class="tab_list" data-role="tab-list">
+                <li class="tab_item">first Tab</li>
+                <li class="tab_item">second Tab</li>
+                <li class="tab_item">third Tab</li>
+            </ul>
+            <div class="tab_contents" data-role="tab-contents">
+                <div class="tab_content">first content</div>
+                <div class="tab_content">second content</div>
+                <div class="tab_content">third content</div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+        //Tab
+        var tabList = document.querySelectorAll('.tab_list li');
+        var tabCont = document.querySelectorAll('.tab_contents div');
+
+        tabList.forEach(function(v, i){
+            v.addEventListener('click' , function(e){
+                if (!this.classList.contains('active')){
+                    tabList.forEach(function(v, i){
+                        tabList[i].classList.remove('active');
+                        tabCont[i].style.display = "none";
+                    });
+                    tabList[i].classList.add('active');
+                    tabCont[i].style.display = "block";
+                };
+                e.preventDefault();
+            });
+        });
+
+        var accHeader =  document.querySelectorAll('[data-role = "acc-header"]');
+        accHeader.forEach(function(value){
+            value.addEventListener('click', function(e){
+                this.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
