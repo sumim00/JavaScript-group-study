@@ -24,6 +24,7 @@
         <div class="article">
             <input type="checkbox" name="chkAll" id="chkAll">
             <label for="chkAll">전체선택</label>
+            <br>
             <input type="checkbox" name="chkbox01" id="chkbox01_1">
             <label for="chkbox01_1">체크박스1</label>
             <input type="checkbox" name="chkbox01" id="chkbox01_2">
@@ -48,8 +49,7 @@
                     value.checked = false;
                 });
             }
-            e.preventDefault();// a, input, textarea 등 기본으로 정의된 이벤트 작동을 막는 메서드
-            e.stopPropagation();// 이벤트의 전달, 전파를 막는 메서드
+            e.preventDefault();
         });
         
         // 다른 버튼 상태 변경됐을 때 전체 버튼도 변경
@@ -64,8 +64,7 @@
                 else{
                     chkAll.checked = false;
                 }
-                e.preventDefault();// a, input, textarea 등 기본으로 정의된 이벤트 작동을 막는 메서드
-                e.stopPropagation();// 이벤트의 전달, 전파를 막는 메서드
+                e.preventDefault();
             });
         });
     </script>

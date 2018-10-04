@@ -12,16 +12,18 @@
         .wrap {width:900px; margin:0 auto}
         .article {margin-top:20px;}
         /* custom */
-        .acc_item {width:300px}
+        .acc_item {width:300px;}
         .acc_tit {width:100%; height:30px; line-height:30px; color:#fff; background-color:blue}
-        .acc_cont {width:100%; height:0px; overflow:hidden; transition:height 0.3s ease-out; border:1px solid blue}
+        .acc_cont {width:100%; height:0px; overflow:hidden; box-sizing:border-box; transition:height 0.3s ease-out; border:1px solid blue}
         .acc_tit.active+.acc_cont {height:200px;}
+        .acc_btn {padding:10px; margin-bottom:20px}
     </style>
 </head>
 <body>
     <div class="wrap">
         <h1>Accordian</h1>
         <div class="article">
+            <button class="acc_btn" onclick="toggleAll();">ToggleAll</button>
             <ul class="accordian_wrap">
                 <li class="acc_item" data-role="acc-item">
                     <h4 class="acc_tit active" data-role="acc-tit">first header</h4>
@@ -40,22 +42,31 @@
     </div>
     <script src="../js/jquery-3.3.1.js"></script>
     <script type="text/javascript">
-        //Accordian
-        var accItems = document.querySelectorAll('[data-role="acc-item"]')
-        var accTitles = document.querySelectorAll('[data-role="acc-tit"]')
-        for(i=0; i<accItems.length; i++){
-            accTitles[i].addEventListener('click', toggleAcc, false);
+        // Accordian
+        var accTitles = document.querySelectorAll('[data-role="acc-tit"]');
+        accTitles.forEach(function(v, i){
+            // 클릭 시 다른 아코디언 닫힘
+            v.addEventListener('click', function(){
+                for(j=0; j<accTitles.length; j++){
+                accTitles[j].classList.remove('active');
+            };
+            // 클릭 시 해당 아코디언 토글
+                v.classList.toggle('active');
+            });
+        });
+
+        // toggleAll 버튼
+        function toggleAll(){
+            var accTitles = document.querySelectorAll('[data-role="acc-tit"]');
+            var accActive = document.querySelectorAll('[data-role="acc-tit"].active');
+            if (accTitles.length !== accActive.length){
+                accTitles.forEach(function(v){
+                    v.classList.remove('active');
+                });
+            }
+            accTitles.forEach(function(v){
+                v.classList.toggle('active');
+            });
         };
-        //클릭 시 본문 열림 닫힘
-        function toggleAcc(){
-            this.classList.toggle('active');
-        };
-        // 클릭 시 다른 아코디언 닫힘
-        // function toggleAcc(){
-        //     for(j=0; j<accItems.length; j++){
-        //         accTitles[j].classList.remove('active');
-        //     }
-        //     this.classList.add('active');
-        // };
     </script>
 </body>

@@ -102,16 +102,17 @@
     </div>
     <script src="../js/jquery-3.3.1.js"></script>
     <script type="text/javascript">
-        //테이블이 여러개일 때 각각의 테이블에 1~25까지 숫자 입력
+        // 테이블이 여러개일 때 각각의 테이블에 1~25까지 숫자 입력
         function setTable01(selector){
-            var table = document.querySelectorAll(selector);//매개변수로 테이블 선언
-            table.forEach(function(v, i){//forEach문으로 테이블 각각 함수 실행
+            var table = document.querySelectorAll(selector);
+            table.forEach(function(v, i){
                 var td = table[i].getElementsByTagName('td');
                 for(i=0; i<td.length; i++){
                     td[i].innerHTML = i+1;
                 };
             });
         };
+        // 함수 호출
         setTable01('.test01_table');
     </script>
 </body>
