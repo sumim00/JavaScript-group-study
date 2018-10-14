@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>임지영_스터디_day03</title>
+    <style>
+        * {margin:0; padding:0; list-style:none;}
+        body {position:relative; width:100%; height:100%}
+        ul {position:fixed; top:0; left:0; width:100%;}
+        ul:after {content:''; clear:both; display:block;}
+        ul>li {float:left; width:20%; height:50px}
+        ul>li>button {display:block; position: relative; overflow:hidden; width:100%; height:100%; border:1px solid #222; background-color:#ddd; box-sizing:border-box;}
+        button span {display:block; position:absolute; top:0; width:100%; height:100%; line-height:50px; box-sizing:border-box;}
+        div {display:block; width:100%; height:700px;}
+    </style>
+</head>
+<body>
+    <ul>
+        <li><button id="button01"><span>title</span></button></li>
+        <li><button id="button02"><span>button</span></button></li>
+        <li><button id="button03"><span>button</span></button></li>
+        <li><button id="button04"><span>button</span></button></li>
+        <li><button id="button05"><span>button</span></button></li>
+    </ul>
+    <div id="section01" style="background-color:rebeccapurple">section</div>
+    <div id="section02" style="background-color:blue">section</div>
+    <div id="section03" style="background-color:yellowgreen">section</div>
+    <div id="section04" style="background-color:red">section</div>
+    <div id="section05" style="background-color:orange">section</div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $(function(){
+            $(window).scroll(function(){
+                var $height = $(window).scrollTop();
+                if($height > 50){
+                    $('ul>li button').css('background-color','orange');
+                }
+                else {
+                    $('ul>li button').css('background-color','#ddd');
+                }
+            });
+            $('#button01').click(function(e){
+                $('html, body').animate({scrollTop: $('#section01').offset().top }, 500);
+                e.preventDefault();
+            });
+            
+            // $('html, body') 둘 중 하나는 크롬에서 안먹힘
+            // 스티키 메뉴, 플로팅 버튼, 점프 메뉴
+            // 스크롤 되어있는 장소에서 버튼 컬러도 바뀔 수 있도록 해보기.
+
+            // 1. 풀 팝업
+            //     - 화면을 꽉 채운 팝업
+            //     1) 버튼을 클릭했을 때 해당 팝업이 노출된다.
+            //         show, fadeIn, fadeIn + animate
+            //     2) 포커스가 레이어 안에서만 돌아야된다.
+            //         fucus, blur, keyup, keydown, function(e), e.keycode (키 코드 넘버로 키 제어, 구글에 쳐보기), tabindex
+            //     3) 닫기 버튼을 눌렀을 때 팝업 노출을 시켰던 버튼으로 다시 포커스가 가야한다.
+
+            // 2. 모달 레이어 팝업 
+            //     - dim이 있는 팝업
+            //     - 화면의 가운데에 노출되어야 한다.
+            //     - 화면의 사이즈가 레이어팝업보다 작을 때 : 
+            //         1) 레이어팝업은 화면의 최상단에 붙는다.
+            //         2) 전체 높이, 전체 너비의 한가운데에 뜨고, 화면의 스크롤을 조절해서 레이어팝의 최상단으로 화면을 맞춘다.
+
+            // 3. 팝업 구성 방법
+            //     1) 팝업의 본문만 두고, 껍데기는 가상으로 그려준다.
+            //     2) html에 팝업의 모든 내용을 다 넣어두고 노출만 시킨다.
+            //     3) 버튼과 레이어팝업의 매칭 (팝업이 여러개일 때)
+            //     4) 팝업안에 팝업 (dim 중복되면 안됨)
+
+
+            $('#button01').mouseenter(function(){
+                var $this = $(this).find('span');
+                $this.stop().animate({
+                    top: '-100%'
+                }, 300, function(){
+                    $this.stop().animate({
+                        top: '100%'
+                    }).stop(true, true).animate({
+                        top: '0'
+                    },600);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
