@@ -25,6 +25,18 @@
 
 
 
+### DAY3.  (2018.10.14)
+
+> jQuery Effect & Event
+
+1. 상단 헤더 스크롤 내리면 헤더 전체 background-color 변경
+2. 헤더 버튼을 클릭하면 해당 버튼과 연결된 box로 스크롤 이동
+3. 헤더 버튼 클릭하면 클릭된 버튼 background-color 변경
+4. 버튼에 마우스 커서 들어가면 애니메이션 진행
+5. 스크롤 되어있는 장소에 위치하면 연결된 버튼 컬러도 바뀌게끔
+
+
+
 ### 추가로 찾아볼 것
 
 - e.preventDefault();, e.stopPropagation(); >> 블로그 추가
