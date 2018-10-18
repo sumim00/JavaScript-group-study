@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>popup</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <style>
+        * {margin:0; padding:0;}
+        html, body {position:relative; width:100%; height:100%; text-align:center; background-color:lavenderblush}
+        .full_popup {position:absolute; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5)}
+        .input {display:block; width:200px; height:30px; margin:0 auto; line-height:1.5em;}
+        .button {display:block; width:150px; height:50px; margin:20px auto; color:#fff; border:none; border-radius:4px; background-color:teal;}
+        .close {position: absolute; right: 20px; top: 20px; width:20px; height:20px; font-size:30px; color:#222; background:none; border:none;}
+        .inner {position: relative; width:300px; margin:auto; padding:30px; background-color:#fff;}
+    </style>
+</head>
+<body>
+    <div class="full_popup">
+        <div class="inner">
+            <h2>This is Full Pop-up!</h2>
+            <input class="input" type="text" placeholder="password">
+            <button class="close">X</button>
+        </div>
+    </div>
+    <button id="button01" class="button">Full Pop-up!</button>
+    <button id="button02" class="button">Click!</button>
+    <button id="button03" class="button">Click!</button>
+    <!-- <p>
+        When you were here before <br>
+        Couldn't look you in the eye<br>
+        You're just like an angel<br>
+        Your skin makes me cry<br>
+        You float like a feather<br>
+        In a beautiful world<br>
+        And I wish I was special<br>
+        You're so fuckin' special<br>
+        But I'm a creep, I'm a weirdo.<br>
+        What the hell am I doing here?<br>
+        I don't belong here.<br>
+        I don't care if it hurts<br>
+        I want to have control<br>
+        I want a perfect body<br>
+        I want a perfect soul<br>
+        I want you to notice<br>
+        When I'm not around<br>
+        You're so fuckin' special<br>
+        I wish I was special<br>
+        But I'm a creep, I'm a weirdo.<br>
+        What the hell am I doing here?<br>
+        I don't belong here.<br>
+        She's running out again,<br>
+        She's running out<br>
+        She's run run run run<br>
+        Whatever makes you happy<br>
+        Whatever you want<br>
+        You're so fuckin' special<br>
+        I wish I was special<br>
+        But I'm a creep, I'm a weirdo,<br>
+        What the hell am I doing here?<br>
+        I don't belong here.<br>
+        I don't belong here.
+    </p> -->
+    <script>
+        var $btn = $('#button01');
+        var $closeBtn = $('.full_popup button');
+        var $full = $('.full_popup');
+        $btn.on('click', function(){
+            fullPopup($full);
+        });
+        $full.find('button').on('click', function(){
+            closePopup($full);
+        });
+        function fullPopup(el){
+            $el = $(el);
+            $el.fadeIn(300);
+            $('html, body').css({'overflow': 'hidden', 'height': '100%'}); 
+            $('.full_popup').on('scroll touchmove mousewheel', function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            });
+            $el.find('button').focus();
+            $('.full_popup button').on('keydown', function(e){
+                if ($('this:focus') && (e.keyCode == 9)) {
+                    e.preventDefault();
+                    $('.full_popup input:first').focus();
+                }
+            })
+            $('.full_popup input:first').focus();
+        };
+        function closePopup(el){
+            $el = $(el);
+            $el.fadeOut(300)
+            $el.find('button').blur(); 
+            $('#button01').focus();
+            $('html, body').css({'overflow': 'auto', 'height': 'auto'}); 
+            $('.full_popup').off('scroll touchmove mousewheel');
+        };
+    </script>
+</body>
+</html>
