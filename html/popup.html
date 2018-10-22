@@ -11,7 +11,7 @@
         html, body {position:relative; width:100%; height:100%; text-align:center; background-color:lavenderblush}
         .full_popup {z-index:100; display:none; position:fixed; width:100%; height:100%; background-color:#fff}
         .full_popup h2 {margin-top:20%}
-        .Modal_popup {z-index:100; display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); width:350px; height:192px; margin:auto; padding:50px 30px; background-color:#fff;}
+        .Modal_popup {z-index:100; display:none; position:fixed; top:50%; left:50%; width:350px; height:192px; margin:auto; padding:50px 30px; background-color:#fff;}
         .dim {content:''; z-index:99; display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:#000; opacity:0.5}
         .input {display:block; width:200px; height:30px; margin:0 auto; margin-top:30px; text-indent:10px; line-height:1.5em;}
         .button {display:block; width:150px; height:50px; margin:20px auto; margin-top:20%; color:#fff; border:none; border-radius:4px; background-color:teal; cursor:pointer;}
@@ -34,6 +34,7 @@
     <button id="button02" class="button">Modal Pop-up!</button>
     <div class="dim"></div>
     <script>
+
         // PopUp 생성자 함수 정의
         function PopUp (btn, box, close){
             this.btn = btn;
@@ -44,11 +45,16 @@
         $(window).resize(function(){
         var windowY = $(window).height();
         var modalY = $('.Modal_popup').outerHeight();  
-                // console.log($(window).height());
-                // console.log(modalY);
+        var modalTop = $('.Modal_popup').offset().top
             if (windowY < modalY){
                 console.log('window is short!');
-                $('.Modal_popup').css('top','0');
+                // 화면의 사이즈가 레이어팝업보다 작을 때 : 레이어팝업은 화면의 최상단에 붙는다.
+                $('.Modal_popup').css({'top' : '0' , 'transform' : 'translate(-50%, 0)'});
+                // 전체 높이, 전체 너비의 한가운데에 뜨고, 화면의 스크롤을 조절해서 레이어팝의 최상단으로 화면을 맞춘다.
+                // $(window).scrollTop();
+                // $(window).stop().animate({scrollTop: modalTop}, 500);
+                // $('.Modal_popup').offset().top;
+                // console.log($(window).scrollTop());
             }
         })
         PopUp.prototype.openPop = function(){
