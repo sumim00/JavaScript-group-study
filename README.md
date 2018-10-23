@@ -37,6 +37,12 @@
 
 
 
+### DAY4.  (2018.10.14)
+
+> jQuery Pop-up
+
+
+
 ### 추가로 찾아볼 것
 
-- e.preventDefault();, e.stopPropagation(); >> 블로그 추가
+- ecma6 추가된 부분
