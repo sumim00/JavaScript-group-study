@@ -8,15 +8,15 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <style>
         * {margin:0; padding:0; box-sizing:border-box}
-        html, body {position:relative; width:100%; height:100%; text-align:center; background-color:lavenderblush}
+        html, body {position:relative; width:100%; text-align:center; background-color:lavenderblush}
         .full_popup {z-index:100; display:none; position:fixed; width:100%; height:100%; background-color:#fff}
         .full_popup h2 {margin-top:20%}
-        .Modal_popup {z-index:100; display:none; position:fixed; top:50%; left:50%; width:350px; height:192px; margin:auto; padding:50px 30px; background-color:#fff;}
+        .Modal_popup {z-index:100; display:none; overflow-y:auto; position:fixed; top:50%; left:50%; width:350px; background-color:#fff; transform:translate(-50%, -50%)}
+        .Modal_popup .inner {padding:200px 50px;}
         .dim {content:''; z-index:99; display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:#000; opacity:0.5}
         .input {display:block; width:200px; height:30px; margin:0 auto; margin-top:30px; text-indent:10px; line-height:1.5em;}
         .button {display:block; width:150px; height:50px; margin:20px auto; margin-top:20%; color:#fff; border:none; border-radius:4px; background-color:teal; cursor:pointer;}
         .close {position:absolute; right:20px; top:20px; font-size:30px; color:#222; background:none; border:none;}
-        .inner {position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:300px; margin:auto; padding:50px 30px; background-color:#fff;}
     </style>
 </head>
 <body>
@@ -26,9 +26,11 @@
         <button class="close">×</button>
     </div>
     <div class="Modal_popup">
-        <h2>This is Modal Pop-up!</h2>
-        <input class="input" type="text" placeholder="Input">
-        <button class="close">×</button>
+        <div class="inner">
+            <h2>This is Modal Pop-up!</h2>
+            <input class="input" type="text" placeholder="Input">
+            <button class="close">×</button>
+        </div>
     </div>
     <button id="button01" class="button">Full Pop-up!</button>
     <button id="button02" class="button">Modal Pop-up!</button>
@@ -41,22 +43,28 @@
             this.box = box;
             this.close = close;
         }
-        // PopUp open했을 때 메서드
-        $(window).resize(function(){
-        var windowY = $(window).height();
-        var modalY = $('.Modal_popup').outerHeight();  
-        var modalTop = $('.Modal_popup').offset().top
+        function windowSize(){
+            var modalY = $('.Modal_popup').height();  
+            var modalTop = $('.Modal_popup').offset().top
+            var windowY = $(window).height();
             if (windowY < modalY){
-                console.log('window is short!');
                 // 화면의 사이즈가 레이어팝업보다 작을 때 : 레이어팝업은 화면의 최상단에 붙는다.
-                $('.Modal_popup').css({'top' : '0' , 'transform' : 'translate(-50%, 0)'});
+                // $('.Modal_popup').css({'top' : '0' , 'transform' : 'translate(-50%, 0)'})
                 // 전체 높이, 전체 너비의 한가운데에 뜨고, 화면의 스크롤을 조절해서 레이어팝의 최상단으로 화면을 맞춘다.
-                // $(window).scrollTop();
-                // $(window).stop().animate({scrollTop: modalTop}, 500);
-                // $('.Modal_popup').offset().top;
-                // console.log($(window).scrollTop());
+                $('.Modal_popup').css({'top' : '0' , 'transform' : 'translate(-50%, 0)' , 'height' : '100%'})
+            } else {
+                $('.Modal_popup').css({'top' : '' , 'transform' : '' , 'height' : ''})
+            }
+        }
+        $(window).on({
+            load: () => {
+                windowSize();
+            },
+            resize: () => {
+                windowSize();
             }
         })
+        // PopUp open했을 때 메서드
         PopUp.prototype.openPop = function(){
             this.box.fadeIn(300);
             $('.dim').fadeIn(300);
