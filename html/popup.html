@@ -32,8 +32,12 @@
             <button class="close">×</button>
         </div>
     </div>
+    <div class="popup_all">
+
+    </div>
     <button id="button01" class="button">Full Pop-up!</button>
     <button id="button02" class="button">Modal Pop-up!</button>
+    <button id="button03" class="button">All Pop-up!</button>
     <div class="dim"></div>
     <script>
 
@@ -56,14 +60,12 @@
                 $('.Modal_popup').css({'top' : '' , 'transform' : '' , 'height' : ''})
             }
         }
-        $(window).on({
-            load: () => {
-                windowSize();
-            },
-            resize: () => {
-                windowSize();
-            }
-        })
+        function PopUpAll (box){
+            this.box = box;
+        }
+        PopUpAll.prototype.openPopAll = function(){
+            this.box.append("<div><h2>This is Modal Pop-up!</h2></div>")
+        }
         // PopUp open했을 때 메서드
         PopUp.prototype.openPop = function(){
             this.box.fadeIn(300);
@@ -104,6 +106,10 @@
         modalPopup.close.on('click', function(){
             modalPopup.closePop();
         });
+        var popupAll = new PopUpAll($('.popup_all'));
+        $('#button03').on('click', () => {
+            popupAll.openPopAll();
+        })
     </script>
 </body>
 </html>
