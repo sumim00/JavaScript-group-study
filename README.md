@@ -87,3 +87,4 @@
 ### 추가로 찾아볼 것
 
 - ecma6 추가된 부분
+- javascript로 짠 코드는 jQuery로, jQuery로 짠 코드는 javascript로 바꿔서 만들어보기.
