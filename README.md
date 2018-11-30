@@ -72,7 +72,50 @@
 
 
 
+
 ### DAY6. (2018.11.18)
+
+> jQuery plugins
+
+종류
+
+form 디자인 플러그인 (select)
+
+https://plugins.jquery.com/chosen/
+
+pc만 지원 -> M에선 -webkit-apperence : none 처리로 해결 가능
+
+rtl : right to left, 중동 같이 언어 방향이 다른 경우 변경해준다.
+
+html css direction 에서 rtl, ltr 을 확인할 수 있다.
+
+
+
+스크롤바 디자인 플러그인
+
+iscroll
+
+https://github.com/cubiq/iscroll
+
+id로 제어하는 경우가 많기 때문에 multiple일 때 사용하는 방법도 확인해야 함.
+
+(each 문으로 attr를 넣어준 뒤에 id값을 매칭시키기)
+
+
+
+달력
+
+datepicker
+
+https://jqueryui.com/datepicker/
+
+
+
+slide 디자인 플러그인
+
+
+
+### DAY7. (2018.12.02)
 
 > jQuery Pop-up
 
@@ -88,3 +131,6 @@
 
 - ecma6 추가된 부분
 - javascript로 짠 코드는 jQuery로, jQuery로 짠 코드는 javascript로 바꿔서 만들어보기.
+
+
+
