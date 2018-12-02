@@ -47,7 +47,7 @@
 
 > jQuery Pop-up
 
-1. 풀팝업
+1. ##### 풀팝업
  - 화면을 꽉 채운 팝업
     1) 버튼을 클릭했을때 해당 팝업이 노출된다. 
     show , fadeIn, fadeIn + animate
@@ -55,7 +55,7 @@
     focus() , blur(), keyup, keydown, function(e), e.keyCode, tabindex
      3) 닫기 버튼을 눌렀을때 팝업 노출을 시켰던 버튼으로 다시 포커스가 가야한다.
 
-  2. 모달레이업팝업
+  2. ##### 모달레이업팝업
   - 딤이 있는 팝업 
   - 화면의 가운데에 노출되어야한다.
   - 화면의 사이즈가 레이어팝업보다 작을때 :
@@ -72,58 +72,12 @@
 
 
 
-
 ### DAY6. (2018.11.18)
-
-> jQuery plugins
-
-종류
-
-form 디자인 플러그인 (select)
-
-https://plugins.jquery.com/chosen/
-
-pc만 지원 -> M에선 -webkit-apperence : none 처리로 해결 가능
-
-rtl : right to left, 중동 같이 언어 방향이 다른 경우 변경해준다.
-
-html css direction 에서 rtl, ltr 을 확인할 수 있다.
-
-
-
-스크롤바 디자인 플러그인
-
-iscroll
-
-https://github.com/cubiq/iscroll
-
-id로 제어하는 경우가 많기 때문에 multiple일 때 사용하는 방법도 확인해야 함.
-
-(each 문으로 attr를 넣어준 뒤에 id값을 매칭시키기)
-
-
-
-달력
-
-datepicker
-
-https://jqueryui.com/datepicker/
-
-
-
-slide 디자인 플러그인
-
-
-
-### DAY7. (2018.12.02)
 
 > jQuery Pop-up
 
-- 레이어 화면 노출 위치 조절하기 (레이어 타입별  조절) 
 - 레이어 활성화 함수 만들기 
 - 레이어 비활성화 함수 만들기 
-- 이중 레이어 
-- 윈도우팝업 
 
 
 
@@ -134,3 +88,36 @@ slide 디자인 플러그인
 
 
 
+
+
+### DAY7. (2018.12.02)
+
+> jQuery Pop-up
+
+- 레이어 화면 노출 위치 조절하기 (레이어 타입별  조절) 
+- 이중 레이어 
+- 윈도우팝업 
+
+
+
+#### 레이어 화면 노출 위치 조절하기 (레이어 타입별  조절) 
+
+노출 위치를 조절하는 최소 단위는 1280*800 정도 
+
+##### 1. 최신 브라우저, 모바일만 대응하는 경우
+
+CSS3으로만 조절 가능 (**벤더 프리픽스 필수 : css-auto-prefix)
+
+아이폰은 특유의 바인딩 효과로 인해 스크롤이 계속 생기므로 바닥페이지에 fixed 추가하고 현재 위치의 위치값을 받아서 margin 등으로 조절해야 한다. 
+
+CSS로 조절하는 방법
+
+   	1. position & translate
+   	2. table, table-cell
+   	3. display flex
+
+
+
+##### 2. 하위 브라우저까지 맞춰야 하는 경우
+
+스크립트로 조절
