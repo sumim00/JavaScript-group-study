@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>study popup</title>
+	<!-- <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/style.css"> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<style>
+    * {padding:0; margin:0; line-height:1.4;}
+    html, body {width:100%; height:100%;}
+    .btn-layer {width:100px; height:40px; padding:0 15px; line-height:20px;}
+    .layer {display:none;}
+    .layer-wrapper {position:fixed; left:0; top:0; right:0; bottom:0; width:100%; height:100%;}
+    .layer-wrapper .layer {display:block; position:relative; min-width:200px; max-width:500px; min-height:400px; max-height:500px; background:#fff}
+    .layer-wrapper .layer .layer-head {padding:10px; font-size:14px; line-height:20px; color:#fff; background:#000;}
+    .layer-wrapper .layer .layer-content {padding:10px; font-size:14px; line-height:20px;}
+    .btn-layer-close {position:absolute; top:0; right:0; padding:12px;}
+    .layer-dimm {position:fixed; width:100%; height:100%; background-color: #000;}
+</style>
+</head>
+<body>
+    <button class="btn-layer" data-layer-name="layer01">풀팝업</button>
+    <button class="btn-layer" data-layer-name="layer02">풀팝업</button>
+    <button class="btn-layer" data-layer-name="layer03">풀팝업</button>
+
+    <div class="layer" data-layer="layer01">
+        <div class="layer-head">타이틀1</div>
+        <div class="layer-content">
+            컨텐츠1
+            <a href="#">링크1</a>
+            <a href="#">링크2</a>
+            <a href="#">링크3</a>
+            <a href="#">링크4</a>
+            <a href="#">링크5</a>
+            <a href="#">링크6</a>
+        </div>
+    </div>
+
+    <div class="layer" data-layer="layer02">
+        <div class="layer-head">타이틀2</div>
+        <div class="layer-content">컨텐츠2</div>
+    </div>
+
+    <div class="layer layer-dimm" data-layer="layer03">
+        <div class="layer-head">타이틀3</div>
+        <div class="layer-content">컨텐츠3</div>
+    </div>
+
+        
+
+    <script>
+        $(function(){
+            var $button = $('.btn-layer');
+            // 가상의 레이어 팝업 껍데기를 생성한다. 
+            function layerShow(target){
+                var $layer = target.clone();
+                var $layerWrapper = $('<div class="layer-wrapper"/>');
+                var $dim = $('<div class="layer-dimm" />');
+                var $close = $('<button class="btn-layer-close"><span>닫기</span></button>');
+                
+                $layer.attr('tabindex','0').append($close);
+                $layerWrapper.append($dim).append($layer);
+                $('body').append($layerWrapper);
+                //$('.layer-wrapper').fadeIn();
+                $('.layer-wrapper .layer').focus();
+                layerFocusControl($('.layer-wrapper .layer'));
+            }
+            // 백탭, 탭을 실행했을 때 레이어팝업 영역 밖으로 벗어나지 않도록 하는 함수를 생성한다.
+            function layerFocusControl(target){
+                var $layer = target;
+                var $firstEL = target.find('a, button, input, textarea, select, [tabindex="0"]').first();
+                var $lastEL = target.find('a, button, input, textarea, select, [tabindex="0"]').last();
+                $firstEL.on('keydown', function(e){
+                    if(e.keyCode == 9 && e.shiftKey){
+                        $lastEL.focus();e.preventDefault();
+                    }
+                });
+                $lastEL.on('keydown', function(e){
+                    if(e.keyCode == 9 && !e.shiftKey){
+                        $firstEL.focus();e.preventDefault();
+                    }
+                });
+            }
+            // 버튼을 클릭했을 때 껍데기에 버튼과 데이터 값이 일치하는 요소를 불러오고 껍데기를 보여준다.
+            $button.on('click', function(e){
+                var $this= $(this);
+                var layerName = $this.data('layerName');
+                var $currentLayer = $('[data-layer="' + layerName + '"]');
+                e.preventDefault();
+                $this.addClass('current-button');
+                layerShow($currentLayer);
+                // 여기엔 없는데 껍데기가 숨겨져있을 경우 show(), fadeIn() 등을 사용해서 활성화시킨다.
+
+                // 레이어 팝업 노출 위치 조절하기
+                var $popLayer = $('.layer-wrapper .layer');
+                var $popWrapper = $('.layer-wrapper');
+                $popLayer.offset({
+                    top: ($popWrapper.height() / 2) - ($popLayer.height() / 2),
+                    left: ($popWrapper.width() / 2) - ($popLayer.width() / 2)
+                })
+                $(window).resize(function(){
+                    $popLayer.offset({
+                        // 윈도우 전체에서 팝업창 크기를 빼고난 절반 + 스크롤된 값
+                        // top: ($(window).innerHeight() - $popLayer.height)/2 + $(window).offset().top
+                        top: ($popWrapper.height() / 2) - ($popLayer.height() / 2),
+                        left: ($popWrapper.width() / 2) - ($popLayer.width() / 2)
+                    })
+                    if($(window).height() < 600) {
+                        $popLayer.offset({
+                            top: ($popWrapper.height() / 2) - ($popLayer.height() / 2),
+                            left: ($popWrapper.width() / 2) - ($popLayer.width() / 2)
+                        })
+                        $popLayer.offset({
+                            'min-height':'100%', 
+                            'max-height' : '100%', 
+                            top: 0,
+                            left: ($popWrapper.width() / 2) - ($popLayer.width() / 2)
+                        })
+                    } else {
+                        $popLayer.css({
+                            'min-height':'', 
+                            'max-height' : '', 
+                            top: ($popWrapper.height() / 2) - ($popLayer.height() / 2),
+                            left: ($popWrapper.width() / 2) - ($popLayer.width() / 2)
+                        })
+                    }
+                })
+            });
+            // 닫기 버튼을 클릭했을 때 껍데기 레이어를 숨기거나 제거하고, 팝업을 누르기 전 버튼에 다시 포커스를 준다.
+            $(document).on('click', '.btn-layer-close', function(e){
+                var $this = $(this);
+                var $layer = $this.closest('.layer-wrapper');
+                var $currentButton = $('.current-button');
+                
+                e.preventDefault();
+                $layer.remove();
+                $currentButton.focus().removeClass('current-button');
+            });
+        });
+    </script>
+    
+
+</body>
+</html>
