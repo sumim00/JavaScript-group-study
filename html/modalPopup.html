@@ -114,21 +114,9 @@
                     }
                 });
             };
-            // 버튼을 클릭했을 때 껍데기에 버튼과 데이터 값이 일치하는 요소를 불러오고 껍데기를 보여준다.
-            $button.on('click', function(e){
-                var $this= $(this);
-                var layerName = $this.data('layerName');
-                var $currentLayer = $('[data-layer="' + layerName + '"]');
-                var $popLayer = $('.layer-wrapper .layer');
-                e.preventDefault();
-                $this.addClass('current-button');
-                layerShow($currentLayer);
-                popupLocate($popLayer);
-                // 여기엔 없는데 껍데기가 숨겨져있을 경우 show(), fadeIn() 등을 사용해서 활성화시킨다.
-            });
             // 레이어 팝업 노출 위치 조절하기
-            function popupLocate(target){
-                var $layer = target;
+            function popupLocate(){
+                var $layer = $('.layer-wrapper .layer');
                 $layer.offset({
                     // 윈도우 전체에서 팝업창 크기를 빼고난 절반 + 스크롤된 값
                     top: ($(window).innerHeight() - $layer.innerHeight()) / 2 + $(window).scrollTop(),
@@ -153,6 +141,17 @@
                     }
                 })
             };
+            // 버튼을 클릭했을 때 껍데기에 버튼과 데이터 값이 일치하는 요소를 불러오고 껍데기를 보여준다.
+            $button.on('click', function(e){
+                var $this= $(this);
+                var layerName = $this.data('layerName');
+                var $currentLayer = $('[data-layer="' + layerName + '"]');
+                e.preventDefault();
+                $this.addClass('current-button');
+                layerShow($currentLayer);
+                popupLocate();
+                // 여기엔 없는데 껍데기가 숨겨져있을 경우 show(), fadeIn() 등을 사용해서 활성화시킨다.
+            });
             // 닫기 버튼을 클릭했을 때 껍데기 레이어를 숨기거나 제거하고, 팝업을 누르기 전 버튼에 다시 포커스를 준다.
             $(document).on('click', '.btn-layer-close', function(e){
                 var $this =  (this);
