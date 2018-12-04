@@ -3,23 +3,55 @@
 <head>
 	<meta charset="UTF-8">
 	<title>study popup</title>
-	<!-- <link rel="stylesheet" href="../../css/reset.css">
-    <link rel="stylesheet" href="../../css/style.css"> -->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <style>
-    * {padding:0; margin:0; line-height:1.4;}
+    * {padding:0; margin:0; line-height:1.4em;}
     html, body {width:100%; height:100%;}
     .btn-layer {width:100px; height:40px; padding:0 15px; line-height:20px;}
     .layer {display:none;}
-    .layer-wrapper {position:fixed; left:0; top:0; right:0; bottom:0; width:100%; height:100%;}
-    .layer-wrapper .layer {display:block; position:relative; min-width:200px; max-width:500px; min-height:400px; max-height:500px; background:#fff}
+    .layer-wrapper {position:absolute; left:0; top:0; right:0; bottom:0; width:100%; height:100%;}
+    .layer-wrapper .layer {display:block; position:relative; width:300px; min-height:400px; background:#fff;}
     .layer-wrapper .layer .layer-head {padding:10px; font-size:14px; line-height:20px; color:#fff; background:#000;}
     .layer-wrapper .layer .layer-content {padding:10px; font-size:14px; line-height:20px;}
     .btn-layer-close {position:absolute; top:0; right:0; padding:12px;}
-    .layer-dimm {position:fixed; width:100%; height:100%; background-color: #000;}
+    .layer-dim {position:fixed; width:100%; height:100%; background-color: #000;}
 </style>
 </head>
 <body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <button class="btn-layer" data-layer-name="layer01">풀팝업</button>
     <button class="btn-layer" data-layer-name="layer02">풀팝업</button>
     <button class="btn-layer" data-layer-name="layer03">풀팝업</button>
@@ -42,7 +74,7 @@
         <div class="layer-content">컨텐츠2</div>
     </div>
 
-    <div class="layer layer-dimm" data-layer="layer03">
+    <div class="layer" data-layer="layer03">
         <div class="layer-head">타이틀3</div>
         <div class="layer-content">컨텐츠3</div>
     </div>
@@ -56,7 +88,7 @@
             function layerShow(target){
                 var $layer = target.clone();
                 var $layerWrapper = $('<div class="layer-wrapper"/>');
-                var $dim = $('<div class="layer-dimm" />');
+                var $dim = $('<div class="layer-dim" />');
                 var $close = $('<button class="btn-layer-close"><span>닫기</span></button>');
                 
                 $layer.attr('tabindex','0').append($close);
@@ -81,55 +113,49 @@
                         $firstEL.focus();e.preventDefault();
                     }
                 });
-            }
+            };
             // 버튼을 클릭했을 때 껍데기에 버튼과 데이터 값이 일치하는 요소를 불러오고 껍데기를 보여준다.
             $button.on('click', function(e){
                 var $this= $(this);
                 var layerName = $this.data('layerName');
                 var $currentLayer = $('[data-layer="' + layerName + '"]');
+                var $popLayer = $('.layer-wrapper .layer');
                 e.preventDefault();
                 $this.addClass('current-button');
                 layerShow($currentLayer);
+                popupLocate($popLayer);
                 // 여기엔 없는데 껍데기가 숨겨져있을 경우 show(), fadeIn() 등을 사용해서 활성화시킨다.
-
-                // 레이어 팝업 노출 위치 조절하기
-                var $popLayer = $('.layer-wrapper .layer');
-                var $popWrapper = $('.layer-wrapper');
-                $popLayer.offset({
-                    top: ($popWrapper.height() / 2) - ($popLayer.height() / 2),
-                    left: ($popWrapper.width() / 2) - ($popLayer.width() / 2)
-                })
+            });
+            // 레이어 팝업 노출 위치 조절하기
+            function popupLocate(target){
+                var $layer = target;
+                $layer.offset({
+                    // 윈도우 전체에서 팝업창 크기를 빼고난 절반 + 스크롤된 값
+                    top: ($(window).innerHeight() - $layer.innerHeight()) / 2 + $(window).scrollTop(),
+                    left: ($(window).innerWidth() - $layer.innerWidth()) / 2
+                });
                 $(window).resize(function(){
-                    $popLayer.offset({
-                        // 윈도우 전체에서 팝업창 크기를 빼고난 절반 + 스크롤된 값
-                        // top: ($(window).innerHeight() - $popLayer.height)/2 + $(window).offset().top
-                        top: ($popWrapper.height() / 2) - ($popLayer.height() / 2),
-                        left: ($popWrapper.width() / 2) - ($popLayer.width() / 2)
-                    })
-                    if($(window).height() < 600) {
-                        $popLayer.offset({
-                            top: ($popWrapper.height() / 2) - ($popLayer.height() / 2),
-                            left: ($popWrapper.width() / 2) - ($popLayer.width() / 2)
-                        })
-                        $popLayer.offset({
-                            'min-height':'100%', 
-                            'max-height' : '100%', 
-                            top: 0,
-                            left: ($popWrapper.width() / 2) - ($popLayer.width() / 2)
+                    if ($(window).height() > 600) {
+                        $layer.offset({
+                            top: ($(window).innerHeight() - $layer.innerHeight()) / 2 + $(window).scrollTop(),
+                            left: ($(window).innerWidth() - $layer.innerWidth()) / 2
+                        });
+                        $layer.css ({
+                            "height": "",
+                            "min-height": ""
                         })
                     } else {
-                        $popLayer.css({
-                            'min-height':'', 
-                            'max-height' : '', 
-                            top: ($popWrapper.height() / 2) - ($popLayer.height() / 2),
-                            left: ($popWrapper.width() / 2) - ($popLayer.width() / 2)
+                        $layer.css({
+                            "top": "0",
+                            "height": "100%",
+                            "min-height": "0"
                         })
                     }
                 })
-            });
+            };
             // 닫기 버튼을 클릭했을 때 껍데기 레이어를 숨기거나 제거하고, 팝업을 누르기 전 버튼에 다시 포커스를 준다.
             $(document).on('click', '.btn-layer-close', function(e){
-                var $this = $(this);
+                var $this =  (this);
                 var $layer = $this.closest('.layer-wrapper');
                 var $currentButton = $('.current-button');
                 
