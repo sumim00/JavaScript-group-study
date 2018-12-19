@@ -11,8 +11,8 @@
         html, body {width:100%; height:100%;}
         .wrap {width:100%; height:100%; text-align:center; background-color:#3498DB;}
         .slider {width:500px; margin:0 auto;}
-        .item {width:300px; height:300px; padding:10px; text-align: center;}
-        .item h2 {width: 100%; height: 100%; background-color:#fff;}
+        .slick-slide {padding:0 10px;}
+        .item {width:300px; height:300px; text-align: center; background-color:#fff;}
         .current-item {background-color:red;}
         /* .slick-dots li button:hover:before, .slick-dots li button:focus:before {padding:2px} */
     </style>
@@ -26,7 +26,7 @@
     480 이하 1 -->
     <div class="wrap">
         <h1>Slick Slider</h1>
-        <button class="btn-autoplay">Autoplay</button>
+        <button class="btn-autoplay">재생</button>
         <button class="btn-unslick">Unslick</button>
         <div class="slider">
             <div class="item"><h2>1</h2></div>
@@ -41,8 +41,10 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->
     <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../js/slick.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/plugins/CSSPlugin.min.js"></script>
     <script type="text/javascript">
-       
+
         $(document).ready(function(){
             // slick 커스터마이징한 내용을 차후 재사용할 수 있도록 defaultConfig라는 변수에 담고 사용 
             
@@ -56,8 +58,14 @@
                 autoplaySpeed: 2000
             }
             // 처음 실행했을 때 init으로 이벤트 핸들링
-            $('.slider').on('init', function(slick){
-                console.log('init')
+            $('.slider').on('init', function(event, slick){
+                var $slides = $(slick.$slides)
+                var $slide =  $slides[0]
+                var $slideText = $($slide).find('h2')
+                console.log($slideText)
+                // $firstSlide.animate({marginLeft: '10px'}, 100)
+                TweenLite.from($slideText, 1, {opacity: 0, transform: 'translateY(-20px)'})
+
             // 슬라이드 전 이벤트
             }).on('beforeChange', function(event, slick, currentSlide, nextSlide){
                 var $slides = $(slick.$slides)
@@ -73,27 +81,31 @@
             }).slick(defaultConfig)
             // Unslick 이벤트 실행하는 버튼 만들기
             $('.btn-unslick').on('click', function(){
-                $this = $(this)
-                $parent = $this.closest('.wrap')
-                $slider = $parent.find('.slider')
+                var $this = $(this)
+                var $parent = $this.closest('.wrap')
+                var $slider = $parent.find('.slider')
                 if($slider.hasClass('slick-initialized')) {
                     $slider.slick('unslick')
+                    $this.text('Unslick 해제')
                 } else {
                     $slider.slick(defaultConfig)
+                    $this.text('Unslick')
                 }
             })
             // 4. 자동재생 초기 설정하기, 재생/정지 버튼 만들기 과제
             $('.btn-autoplay').on('click', function(){
-                $this = $(this)
-                $parent = $this.closest('.wrap')
-                $slider = $parent.find('.slider')
-                $getSlick = $slider.slick('slickGetOption', {'autoplay': false})
-                // $slider.slick('slickSetOption', {'autoplay': true}, true)
-                // $slider.slick('slickSetOption', {'autoplay'})
-                if ($getSlick == false){
-                    console.log('있대')
+                var $this = $(this)
+                var $parent = $this.closest('.wrap')
+                var $slider = $parent.find('.slider')
+                var $isAuto = $slider.slick('slickGetOption', 'autoplay')
+                if ($isAuto !== true){
+                    // console.log('hello!') 
+                    $slider.slick('slickSetOption', 'autoplay', true, true)
+                    $this.text('정지')
                 } else {
-                    console.log('없대')
+                    // console.log('not hello')
+                    $slider.slick('slickSetOption', 'autoplay', false, true)
+                    $this.text('재생')
                 }
             })
             // 2. 트윈맥스 과제
