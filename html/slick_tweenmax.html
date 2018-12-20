@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Slick & Tweenmax</title>
+    <link rel="stylesheet" type="text/css" href="../css/slick.css">
+    <link rel="stylesheet" type="text/css" href="../css/slick-theme.css">
+    <style>
+        * {margin:0; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:16px; box-sizing:border-box}
+        html, body {width:100%; height:100%}
+        button {padding:10px; line-height:1.2em; border:1px solid #fff; background-color:transparent; color:#fff}
+        .wrap {width:100%; height:100%; padding:30px 0; text-align:center; background-color:#333}
+        .wrap>div {margin-top:20px}
+        .title {font-size:24px; color:#fff}
+        .slider {width:500px; margin:0 auto; margin-top:20px}
+        .slick-slide {padding:0 10px}
+        .item {height:167px; text-align: center; background-color:#fff}
+        .slick-prev:before, .slick-next:before {font-size:32px;}
+        .slick-prev, .slick-next {width:30px; height:40px;}
+        .slick-dots li button:before {font-size:30px;}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1 class="title">Slick & Tweenmax</h1>
+        <div class="btn_wrap">
+            <button class="btn-autoplay">정지</button>
+            <button class="btn-unslick">Unslick</button>
+        </div>
+        <div class="slider">
+            <div class="item"><span>1</span></div>
+            <div class="item"><h2>2</h2></div>
+            <div class="item"><h2>3</h2></div>
+            <div class="item"><h2>4</h2></div>
+            <div class="item"><h2>5</h2></div>
+            <div class="item"><h2>6</h2></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="../js/slick.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/plugins/CSSPlugin.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            var defaultConfig = {
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                dots: true,
+                infinite: true,
+                arrows: true,
+                autoplay: true,
+                autoplaySpeed: 2000
+            }
+            
+            // 1. 초기 실행될때 첫번째 슬라이드의 텍스트가 fadeIn 효과처럼 위치값 , opacity 모션 주기
+            $('.slider').on('init', function(event, slick){
+                var $slides = $(slick.$slides)
+                var $slide =  $slides[0]
+                var $slideText = $($slide).find('h2')
+                TweenLite.from($slideText, 1, {opacity: 0, transform: 'translateY(-20px)'})
+
+            // 2. 슬라이드를 넘길때마다 배경색상 바꾸기
+            }).on('afterChange', function(event, slick, currentSlide){
+                var $slides = $(slick.$slides)
+                var $current = $(slick.$slides.get(currentSlide))
+                var $item = $current.find('.item')
+                var colorList = [
+                    '5e9bf7', 
+                    'f75e9b',
+                    'f7bc5e',
+                    '4fe969',
+                    '8a5ee3',
+                    '51c274',
+                    '63b43b',
+                    'd2613f'
+                ]
+                var color = colorList[Math.floor(Math.random() * colorList.length)];
+                $('.wrap').css('background-color','#'+color)
+
+            // 3. 슬라이드를 넘길때마다 해당 슬라이드별로 본인이 넣고싶은 모션을 각각 지정해서 넣기
+            }).on('beforeChange', function(event, slick, currentSlide, nextSlide){
+                var $slides = $(slick.$slides)
+                var $current = $(slick.$slides.get(currentSlide))
+                var $next = $(slick.$slides.get(nextSlide))
+                var $item = $next.find('.item')
+                
+                switch (nextSlide) {
+                    case 0 : 
+                        TweenLite.fromTo($item, 2, {transform: 'translateX(-20px)'}, {transform: 'translateX(0)'})
+                        break;
+                    case 1 : 
+                        TweenLite.fromTo($item, 2, {transform: 'scale(1.2)'}, {transform: 'scale(1)'})
+                        break;
+                    case 2 :
+                        TweenLite.fromTo($item, 2, {transform: 'rotate(30deg)'}, {transform: 'rotate(0deg)'})
+                        break;
+                    case 3 :
+                        TweenLite.fromTo($item, 2, {backgroundColor: '#f0cd3f'}, {backgroundColor: '#ffffff'})
+                        break;
+                    case 4 :
+                        TweenLite.fromTo($item, 2, {color: '#f0cd3f'}, {color: '#222'})
+                        break;
+                    case 5 :
+                        TweenLite.fromTo($item, 2, {opacity: 0}, {opacity: 1})
+                        break;
+                }
+            }).slick(defaultConfig)
+
+            $('.btn-unslick').on('click', function(){
+                var $this = $(this)
+                var $parent = $this.closest('.wrap')
+                var $slider = $parent.find('.slider')
+                if($slider.hasClass('slick-initialized')) {
+                    $slider.slick('unslick')
+                    $this.text('Unslick 해제')
+                } else {
+                    $slider.slick(defaultConfig)
+                    $this.text('Unslick')
+                }
+            })
+
+            // 4. 자동재생 초기 설정하기, 재생/정지 버튼 만들기 과제
+            $('.btn-autoplay').on('click', function(){
+                var $this = $(this)
+                var $parent = $this.closest('.wrap')
+                var $slider = $parent.find('.slider')
+                var $isAuto = $slider.slick('slickGetOption', 'autoplay')
+                if ($isAuto !== true){
+                    $slider.slick('slickSetOption', 'autoplay', true, true)
+                    $this.text('정지')
+                } else {
+                    $slider.slick('slickSetOption', 'autoplay', false, true)
+                    $this.text('자동재생')
+                }
+            })
+        });
+    </script>
+</body>
+</html>
