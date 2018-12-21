@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>자바스크립트 기초(2)</title>
+    
+    <style type="text/css">
+        /* dafault */
+        * {margin:0; padding:0; border:0; text-decoration:none; list-style:none; color:#222; -webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+        .wrap {width:900px; margin:0 auto}
+        h1 {font-size:16px; margin-top:20px;}
+        table {margin:10px; border-collapse:collapse}
+        td {padding:5px; border:1px solid #222}
+        .article {margin-top:20px;}
+        /* custom */
+        .acc_section {width:300px; text-align:center;}
+        .acc_header {width:100%; padding:10px 0; cursor:pointer; border:1px solid #000}
+        .acc_header.active + .acc_body {height:300px}
+        .acc_body {overflow:hidden; width:100%; height:0px; background-color:#e3e3e3; transition:height 0.2s ease-out}
+        .tab_list:after {content:''; clear:both; display:block}
+        .tab_list li {float:left; width:100px; height:50px; line-height:50px; text-align:center; border:1px solid red}
+        .tab_list li.active {color:#fff; background-color:red}
+        .tab_content {display:none; width:300px; height:200px; border:1px solid red}
+        .acc_item {width:300px}
+        .acc_tit {width:100%; height:30px; line-height:30px; color:#fff; background-color:blue}
+        .acc_cont {width:100%; height:0px; overflow:hidden; transition:height 0.3s ease-out; border:1px solid blue}
+        .acc_tit.active+.acc_cont {height:200px;}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>문제 1. 테이블이 여러개일때에도 각각의 테이블에 1~25까지 숫자 입력</h1>
+        <div class="article">
+            <table class="test01_table" data-role="setTable">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="test01_table" data-role="setTable">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h1>문제 2-1. 탭 : 기본탭</h1>  
+        <div class="article">
+            <ul class="tab_list" data-role="tab-list">
+                <li class="tab_item">첫 번째 탭</li>
+                <li class="tab_item">두 번째 탭</li>
+                <li class="tab_item">세 번째 탭</li>
+            </ul>
+            <div class="tab_contents" data-role="tab-contents">
+                <div class="tab_content">ㅃㅃ빨간맛</div>
+                <div class="tab_content">궁금해 허니</div>
+                <div class="tab_content">깨물면 점점 녹아드는</div>
+            </div>
+        </div>
+        <h1>문제 2-2. 탭 : 탭안에 탭</h1> 
+        <div class="article"></div>   
+        <h1>문제 2-3. 탭 : 탭이 여러개일때 탭 안에 탭</h1> 
+        <div class="article"></div>   
+        <h1>문제 3-1. 아코디언 : 클릭시 본문 열림 닫힘</h1> 
+        <div class="article">
+            <ul class="accordian_wrap">
+                <li class="acc_item" data-role="acc-item">
+                    <h4 class="acc_tit active" data-role="acc-tit">이건 1번</h4>
+                    <div class="acc_cont">하하</div>
+                </li>
+                <li class="acc_item" data-role="acc-item">
+                    <h4 class="acc_tit" data-role="acc-tit">얘는 2번</h4>
+                    <div class="acc_cont">ㅎㅎㅎㅎㅎ</div>
+                </li>
+                <li class="acc_item" data-role="acc-item">
+                    <h4 class="acc_tit" data-role="acc-tit">마지막 3번</h4>
+                    <div class="acc_cont">ㅎㅎ</div>
+                </li>
+            </ul>
+        </div>   
+        <h1>문제 3-2. 아코디언 : +=다른 리스트 닫힘</h1> 
+        <div class="article"></div>   
+        <h1>문제 3-3. 아코디언 : +=전체 펼침 닫힘 버튼</h1> 
+        <div class="article"></div>   
+        <h1>문제 4. 체크박스 전체선택</h1>
+        <div class="article">
+            <input type="checkbox" name="chkAll" id="chkAll">
+            <label for="chkAll">전체선택</label>
+            <input type="checkbox" name="chkbox01" id="chkbox01_1">
+            <label for="chkbox01_1">체크박스1</label>
+            <input type="checkbox" name="chkbox01" id="chkbox01_2">
+            <label for="chkbox01_2">체크박스2</label>
+            <input type="checkbox" name="chkbox01" id="chkbox01_3">
+            <label for="chkbox01_3">체크박스3</label>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        //문제 1. 테이블이 여러개일때에도 각각의 테이블에 1~25까지 숫자 입력
+        function setTable01(selector){
+            var table = document.querySelectorAll(selector);//매개변수로 테이블 선언
+            table.forEach(function(v, i){//forEach문으로 테이블 각각 함수 실행
+                var td = table[i].getElementsByTagName('td');
+                for(i=0; i<td.length; i++){
+                    td[i].innerHTML = i+1;
+                };
+            });
+        };
+        setTable01('.test01_table');
+        
+
+        //문제 2. 탭
+        var tabList = document.querySelectorAll('.tab_list li'); //children과 childNodes의 차이?
+        var tabCont = document.querySelectorAll('.tab_contents div');
+
+        tabList.forEach(function(v, i){
+            v.addEventListener('click' , function(e){
+                if (!this.classList.contains('active')){
+                    tabList.forEach(function(v, i){
+                        tabList[i].classList.remove('active');
+                        tabCont[i].style.display = "none";
+                    });
+                    tabList[i].classList.add('active');
+                    tabCont[i].style.display = "block";
+                };
+                e.preventDefault();
+            });
+        });
+
+        var accHeader =  document.querySelectorAll('[data-role = "acc-header"]');
+        accHeader.forEach(function(value){
+            value.addEventListener('click', function(e){
+                this.classList.toggle('active');
+            });
+        });
+
+        // //문제 2. 탭
+        // var tabItems = document.querySelector('.tab_list li');
+        // var tabConts = document.getElementsByClassName('tab_content');
+
+        // tabItems[0].classList.add('active');
+        // tabConts[0].style.display = 'block';
+
+        // for (i=0; i<tabItems.length; i++){
+        //     tabItems[i].addEventListener('click', activeTab);
+        // };
+
+        // function activeTab(event){
+        //     for (j=0; j<tabItems.length; j++){
+        //         tabItems[j].classList.remove('active');//IE9 이하 지원은 className += " .."
+        //         tabConts[j].style.display = 'none';
+        //     };
+        //     if(!this.classList.contains('active')){
+        //         this.classList.add('active');
+        //         var tabCont = this.getAttribute('data-tab');
+        //         tabConts[tabCont].style.display = 'block';
+        //     };
+        // };
+        
+        //문제 3. 아코디언
+        var accItems = document.querySelectorAll('[data-role="acc-item"]')
+        var accTitles = document.querySelectorAll('[data-role="acc-tit"]')
+        for(i=0; i<accItems.length; i++){
+            accTitles[i].addEventListener('click', toggleAcc, false);
+        };
+        //클릭 시 본문 열림 닫힘
+        function toggleAcc(){
+            this.classList.toggle('active');
+        };
+        // 다른 리스트 닫힘
+        // function toggleAcc(){
+        //     for(j=0; j<accItems.length; j++){
+        //         accTitles[j].classList.remove('active');
+        //     }
+        //     this.classList.add('active');
+        // };
+
+        //클릭 시 본문 열림 닫힘
+        function toggleAcc(){
+            this.classList.toggle('active');
+        };
+        // 다른 리스트도 닫힘
+        // function toggleAcc(){
+        //     for(j=0; j<accItems.length; j++){
+        //         accTitles[j].classList.remove('active');
+        //     }
+        //     this.classList.add('active');
+        // };
+
+        // 문제 4. 체크박스 전체선택
+        // 전체 버튼 상태 변경됐을 때 전체선택 or 해제
+        document.getElementById('chkAll').addEventListener('change',function(e){
+            var chkboxes = document.getElementsByName('chkbox01');
+            if (this.checked == true){
+                chkboxes.forEach(function(value){
+                    value.checked = true;
+                });
+            }
+            else {
+                chkboxes.forEach(function(value){
+                    value.checked = false;
+                });
+            }
+            e.preventDefault();// a, input, textarea 등 기본으로 정의된 이벤트 작동을 막는 메서드
+            e.stopPropagation();// 이벤트의 전달, 전파를 막는 메서드
+        });
+        
+        // 다른 버튼 상태 변경됐을 때 전체 버튼도 변경
+        document.getElementsByName('chkbox01').forEach(function(){
+            var chkAll = document.getElementById('chkAll');
+            var chkboxes = document.getElementsByName('chkbox01');
+
+            this.addEventListener('change', function(e){
+                if(chkboxes.length == document.querySelectorAll('input[name = "chkbox01"]:checked').length){
+                    chkAll.checked = true;
+                }
+                else{
+                    chkAll.checked = false;
+                }
+                e.preventDefault();// a, input, textarea 등 기본으로 정의된 이벤트 작동을 막는 메서드
+                e.stopPropagation();// 이벤트의 전달, 전파를 막는 메서드
+            });
+        });
+        
+            
+    </script>
+</body>
+</html>
